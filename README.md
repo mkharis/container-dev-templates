@@ -1,4 +1,4 @@
-# 🐳 Docker Compose Development Templates
+# 🐳 Podman Compose Development Templates
 
 Kumpulan template `docker-compose` untuk lingkungan pengembangan lintas bahasa (PHP, Python, Node.js).
 Setiap service berjalan dalam mode `network_mode: host` agar port lokal host langsung bisa diakses dari container.
@@ -67,12 +67,12 @@ services:
 2. Jalankan container sesuai kebutuhan:
 
    ```bash
-   docker-compose -f docker-compose-dev.yml up -d
+   podman compose -f docker-compose-dev.yml up -d
    ```
 3. Masuk ke dalam container:
 
    ```bash
-   docker exec -it php-dev bash
+   podman exec -it php-dev bash
    ```
 
    *(Ganti `php-dev` sesuai nama container yang kamu gunakan.)*
