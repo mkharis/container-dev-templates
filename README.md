@@ -178,5 +178,3 @@ docker exec -it php-dev bash
   ```
 
 ---
-
-Apakah kamu ingin saya tambahkan juga **versi Compose gabungan** (semua PHP, Python, dan Node dalam satu file `docker-compose.yml`) supaya tinggal pilih container saat `up`?
