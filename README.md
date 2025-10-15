@@ -1,12 +1,14 @@
-# 🐳 Podman Compose Development Templates
+# 🐳 Podman & Docker Compose Development Templates
 
-Kumpulan template `docker-compose` untuk lingkungan pengembangan lintas bahasa (PHP, Python, Node.js).
-Setiap service berjalan dalam mode `network_mode: host` agar port lokal host langsung bisa diakses dari container.
+Kumpulan template **Docker Compose**, **Docker Run**, dan **Podman Run** untuk lingkungan pengembangan lintas bahasa (PHP, Python, Node.js).
+Setiap container berjalan dengan `network_mode: host` agar port lokal host langsung dapat diakses dari container.
 Direktori kerja otomatis di-*mount* dari folder saat ini (`.`) agar perubahan file langsung terlihat.
 
 ---
 
 ## 📦 1. PHP Development
+
+### 🧩 docker-compose
 
 ```yaml
 services:
@@ -25,9 +27,39 @@ services:
     tty: true
 ```
 
+### 🐋 docker run
+
+```bash
+docker run -it --rm \
+  --name php-dev \
+  -e APP_USER=root \
+  -e APP_GROUP=root \
+  -e APP_UID=0 \
+  -e APP_GID=0 \
+  -v "$(pwd)":/var/www/html:z \
+  --network host \
+  shinsenter/php:8.2 bash
+```
+
+### 🫧 podman run
+
+```bash
+podman run -it --rm \
+  --name php-dev \
+  -e APP_USER=root \
+  -e APP_GROUP=root \
+  -e APP_UID=0 \
+  -e APP_GID=0 \
+  -v "$(pwd)":/var/www/html:z \
+  --network host \
+  shinsenter/php:8.2 bash
+```
+
 ---
 
 ## 🐍 2. Python Development
+
+### 🧩 docker-compose
 
 ```yaml
 services:
@@ -42,9 +74,33 @@ services:
     tty: true
 ```
 
+### 🐋 docker run
+
+```bash
+docker run -it --rm \
+  --name python-dev \
+  -v "$(pwd)":/app:z \
+  -w /app \
+  --network host \
+  python:3.12-slim bash
+```
+
+### 🫧 podman run
+
+```bash
+podman run -it --rm \
+  --name python-dev \
+  -v "$(pwd)":/app:z \
+  -w /app \
+  --network host \
+  python:3.12-slim bash
+```
+
 ---
 
 ## 🟩 3. Node.js Development
+
+### 🧩 docker-compose
 
 ```yaml
 services:
@@ -59,35 +115,68 @@ services:
     tty: true
 ```
 
+### 🐋 docker run
+
+```bash
+docker run -it --rm \
+  --name node-dev \
+  -v "$(pwd)":/app:z \
+  -w /app \
+  --network host \
+  node:22-slim bash
+```
+
+### 🫧 podman run
+
+```bash
+podman run -it --rm \
+  --name node-dev \
+  -v "$(pwd)":/app:z \
+  -w /app \
+  --network host \
+  node:22-slim bash
+```
+
 ---
 
 ## ⚙️ Cara Menggunakan
 
-1. **Salin salah satu blok di atas** ke file `docker-compose-dev.yml` dalam proyekmu.
-2. Jalankan container sesuai kebutuhan:
+### 🧠 Menggunakan Compose
 
-   ```bash
-   podman compose -f docker-compose-dev.yml up -d
-   ```
-3. Masuk ke dalam container:
+Jalankan salah satu file berikut sesuai kebutuhan:
 
-   ```bash
-   podman exec -it php-dev bash
-   ```
+```bash
+# Podman
+podman compose -f docker-compose-dev.yml up -d
+podman exec -it php-dev bash
 
-   *(Ganti `php-dev` sesuai nama container yang kamu gunakan.)*
+# Docker
+docker compose -f docker-compose-dev.yml up -d
+docker exec -it php-dev bash
+```
+
+*(Ganti `php-dev` sesuai service yang kamu gunakan, misal `python-dev` atau `node-dev`.)*
 
 ---
 
 ## 💡 Tips
 
-* Tambahkan lebih banyak service sesuai kebutuhan (misalnya `mysql`, `redis`, `nginx`, dll).
+* Tambahkan service tambahan seperti `mysql`, `redis`, atau `nginx` sesuai kebutuhan proyek.
 * Gunakan `.env` file untuk menyimpan variabel environment umum.
-* Jika ingin menjaga port host agar tidak konflik, hapus `network_mode: host` dan gunakan port mapping manual, misalnya:
+* Jika tidak ingin menggunakan `network_mode: host`, ubah ke port mapping manual:
 
   ```yaml
   ports:
     - "8080:80"
   ```
+* Untuk menghentikan container:
+
+  ```bash
+  docker stop php-dev
+  # atau
+  podman stop php-dev
+  ```
 
 ---
+
+Apakah kamu ingin saya tambahkan juga **versi Compose gabungan** (semua PHP, Python, dan Node dalam satu file `docker-compose.yml`) supaya tinggal pilih container saat `up`?
