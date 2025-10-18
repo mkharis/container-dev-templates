@@ -30,7 +30,7 @@ services:
 ### 🐋 docker run
 
 ```bash
-docker run -it --rm \
+docker run -d \
   --name php-dev \
   -e APP_USER=root \
   -e APP_GROUP=root \
@@ -44,7 +44,7 @@ docker run -it --rm \
 ### 🫧 podman run
 
 ```bash
-podman run -it --rm \
+podman run -d \
   --name php-dev \
   -e APP_USER=root \
   -e APP_GROUP=root \
@@ -77,7 +77,7 @@ services:
 ### 🐋 docker run
 
 ```bash
-docker run -it --rm \
+docker run -d \
   --name python-dev \
   -v "$(pwd)":/app:z \
   -w /app \
@@ -88,7 +88,7 @@ docker run -it --rm \
 ### 🫧 podman run
 
 ```bash
-podman run -it --rm \
+podman run -d \
   --name python-dev \
   -v "$(pwd)":/app:z \
   -w /app \
@@ -118,7 +118,7 @@ services:
 ### 🐋 docker run
 
 ```bash
-docker run -it --rm \
+docker run -d \
   --name node-dev \
   -v "$(pwd)":/app:z \
   -w /app \
@@ -129,7 +129,7 @@ docker run -it --rm \
 ### 🫧 podman run
 
 ```bash
-podman run -it --rm \
+podman run -d \
   --name node-dev \
   -v "$(pwd)":/app:z \
   -w /app \
